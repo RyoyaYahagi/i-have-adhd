@@ -28,14 +28,14 @@
 Copy/paste into your CLI prompt:
 
 ```text
-Install the i-have-adhd skill/plugin from https://github.com/ayghri/i-have-adhd, refer to the repo's AGENTS.md for instructions.
+Install the i-have-adhd skill/plugin from https://github.com/RyoyaYahagi/i-have-adhd, refer to the repo's AGENTS.md for instructions.
 ```
 
 Or 🔗 [check the installation instructions](INSTALL.md).
 
 ## What it does
 
-A skill for your coding assistant that stops it from burying the answer. Action first. Steps numbered. No "Hope this helps!"
+A skill for your coding assistant that stops it from burying the answer. Action first. Steps numbered. Lower-priority information is deferred, not discarded. No "Hope this helps!"
 
 [Kacper Rutkiewicz | AI Made Simple](https://youtu.be/NEl8kPWZP_Y) has made a good breakdown of an earlier version of the skill.
 ## What changes
@@ -61,6 +61,8 @@ A skill for your coding assistant that stops it from burying the answer. Action 
 > 2. Replace `verifyToken` (lines 42–58) with the snippet below
 > 3. Run `npm test -- auth.spec.ts`
 >
+> **Supplemental:** dependency versions may also be stale.
+>
 > Next: paste the first failing line if any test fails.
 
 </td>
@@ -75,12 +77,12 @@ A skill for your coding assistant that stops it from burying the answer. Action 
 1. Lead with the next action.
 2. Number multi-step tasks.
 3. End with one concrete next step.
-4. Suppress tangents.
+4. Defer tangents without discarding them.
 5. Restate state every turn.
 6. Specific time estimates (minutes, not "a bit").
 7. Make wins visible.
 8. Matter-of-fact errors.
-9. Cap lists to 5 items.
+9. Preserve information; use progressive disclosure.
 10. No preamble. No recap. No closers.
 
 ## Tune it
