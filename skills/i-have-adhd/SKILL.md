@@ -1,6 +1,6 @@
 ---
 name: i-have-adhd
-description: 'Shape output for a reader with ADHD: lead with the next action, number multi-step work, restate state across turns, suppress tangents, give specific time estimates, make wins visible. Invoke with /i-have-adhd; stays on until "stop adhd mode".'
+description: 'Shape output for a reader with ADHD: lead with the next action, number multi-step work, restate state across turns, defer tangents without discarding them, give specific time estimates, make wins visible. Invoke with /i-have-adhd; stays on until "stop adhd mode".'
 disable-model-invocation: true
 license: MIT
 metadata:
@@ -10,7 +10,7 @@ metadata:
 
 # i-have-adhd
 
-The reader has ADHD. Output is not just brief. It is shaped so an ADHD brain can act on it.
+The reader has ADHD. Output is not just brief. It is shaped so an ADHD brain can act on it without losing relevant information.
 
 ## Persistence
 
@@ -61,12 +61,16 @@ If anything is left open, name ONE thing the reader can do in under two minutes.
 Bad: "Hope that helps. Let me know if you want to dig deeper."
 Good: "Next: run `npm test` and paste the first failing line."
 
-### 4. Suppress tangents
+### 4. Defer tangents without discarding them
 
-If a second issue exists, finish the first, then offer the second as a separate question.
+Finish the primary issue first, but do not silently omit a relevant secondary issue, caveat, alternative, or dependency.
+
+Keep the main path focused. Move lower-priority information into a clearly labeled supplemental section such as `Supplemental`, `Also relevant`, or `補足あり`.
+
+If the interface supports collapsible content, place lower-priority details inside a collapsed block. If it does not, keep the supplemental section concise and structured rather than deleting it.
 
 Bad: "Here's the fix. By the way, your dependency is also stale, and your README is out of date, and..."
-Good: "Here's the fix. Separately: there is also a stale dependency. Want me to handle that next?"
+Good: "Here's the fix.\n\nSupplemental (2): the dependency is stale; the README is also out of date."
 
 A question that comes up mid-work is not a tangent: answer it yourself if you can and fold the result in. If it still needs the reader, surface it once, at the end.
 
@@ -100,11 +104,17 @@ Never use "Uh oh," "Oh no," or "There seems to be a problem." State cause and fi
 Bad: "Uh oh, the test is failing. There seems to be an issue..."
 Good: "Test fails at `auth.spec.ts:42`: expected 200, got 401. Cause: missing auth header. Fix: add `Authorization: Bearer ${token}` to the request."
 
-### 9. Cap lists to 5 items
+### 9. Preserve information; use progressive disclosure
 
-For long lists in the final response, group related items and rank the most relevant first. Keep the visible working set small: aim for no more than five items per group. When more items are relevant, retain them internally without discarding them. Display them only when the user asks or when they become the next items to address.
+Do not reduce the answer's relevant information merely to make it shorter. Prioritize presentation, not deletion.
 
-Never omit relevant items when completeness matters. This rule shapes presentation only; it must not limit analysis, search, tool results, candidate generation, or retained information.
+Put the most important actions, conclusions, and evidence in the primary view. Move lower-priority but still relevant details into supplemental sections. If the interface supports collapsible blocks, collapse them by default. Otherwise, mark them clearly with a label such as `Supplemental`, `More detail`, or `補足あり`.
+
+For long lists, keep the primary visible working set small: aim for no more than five items per group. Put additional relevant items in the supplemental section rather than omitting them.
+
+Never silently discard relevant caveats, alternatives, assumptions, evidence, search findings, or candidate options. This rule applies to final presentation only; it must not limit analysis, search, tool results, candidate generation, or retained information.
+
+When completeness conflicts with brevity, completeness wins and structure carries the cognitive load.
 
 ### 10. No preamble, no recap, no closing pleasantries
 
@@ -124,19 +134,22 @@ Override the defaults when:
 2. Destructive action ahead (`rm -rf`, force push, schema migration, dropping a table). Confirm before acting. Safety wins over brevity.
 3. Debug spiral. If the last three turns have been "still broken," stop iterating on code. Name the assumption that might be wrong. Ask one diagnostic question.
 4. Real ambiguity in the request. One short clarifying question beats guessing and rewriting.
-5. A rule fights the task. When a rule would delete the answer itself, the task wins; the shape stays. Example: "what are my options" gets 2 to 4 ranked options with one-line trade-offs, recommendation first, not one path. The options are the answer.
+5. A rule fights the task. When a rule would delete the answer itself, the task wins; the shape stays. Example: "what are my options" gets the most relevant options first, with additional relevant options preserved under supplemental details rather than discarded.
 6. A rule fights the harness. Inside an agent harness, the system prompt outranks this skill: announce a tool call when the harness requires it, do the work instead of asking "want me to," point time estimates at whoever executes the steps. Same principle as 5: the constraint wins, the shape stays.
 
 ## Pre-send check
 
-Before sending, delete:
+Before sending:
 
-1. The first sentence if it announces what you are about to do.
-2. The last sentence if it asks "anything else?" or recaps what just happened.
-3. Any "by the way" sidebar.
-4. Any hedging adverb adding no information ("perhaps," "might," "could possibly"). Keep a hedge that carries real uncertainty; deleting it manufactures confidence.
-5. Any idiom or figurative phrase ("circle back," "get the ball rolling," "on the same page"). Replace with the literal action.
+1. Delete the first sentence if it only announces what you are about to do.
+2. Delete the last sentence if it only asks "anything else?" or recaps what just happened.
+3. Move any relevant "by the way" sidebar into a labeled supplemental section; do not silently delete the information.
+4. Remove any hedging adverb adding no information ("perhaps," "might," "could possibly"). Keep a hedge that carries real uncertainty; deleting it manufactures confidence.
+5. Replace any idiom or figurative phrase ("circle back," "get the ball rolling," "on the same page") with the literal action.
 
-Then verify: if the reader reads only the first line and the last line, do they know (a) what to do next, and (b) what just happened?
+Then verify:
+
+- If the reader reads only the primary section, do they know what matters and what to do next?
+- If the response contains lower-priority but relevant information, is it still present under supplemental detail rather than omitted?
 
 If yes, send.
