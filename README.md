@@ -22,7 +22,6 @@
   <a href=".github/readme/README.fr.md" title="Français" aria-label="Français">🇫🇷</a>
 </p>
 
-
 ## Install
 
 Copy/paste into your CLI prompt:
@@ -35,11 +34,11 @@ Or 🔗 [check the installation instructions](INSTALL.md).
 
 ## What it does
 
-A skill for your coding assistant that stops it from burying the answer. Action first. Steps numbered. Lower-priority information is deferred, not discarded. No "Hope this helps!"
+A skill for coding assistants that makes answers easier to act on without making the underlying reasoning shallower. It puts the answer or next action first, preserves relevant information through progressive disclosure, and avoids burying useful details in filler.
 
 [Kacper Rutkiewicz | AI Made Simple](https://youtu.be/NEl8kPWZP_Y) has made a good breakdown of an earlier version of the skill.
-## What changes
 
+## What changes
 
 <table>
 <tr>
@@ -63,34 +62,37 @@ A skill for your coding assistant that stops it from burying the answer. Action 
 >
 > **Supplemental:** dependency versions may also be stale.
 >
-> Next: paste the first failing line if any test fails.
+> Next: run the test and inspect the first failure, if any.
 
 </td>
 </tr>
 </table>
 
+The skill does not assume every client can render arbitrary collapsible assistant content. If the interface explicitly supports it, supplemental detail can be collapsed. Otherwise it stays visible under a clearly labeled supplemental section instead of being discarded.
 
 ## The rules
 
 10 rules. Full text in [SKILL.md](./skills/i-have-adhd/SKILL.md).
 
-1. Lead with the next action.
+1. Lead with the answer or next action.
 2. Number multi-step tasks.
-3. End with one concrete next step.
+3. End with one concrete next action only when useful.
 4. Defer tangents without discarding them.
-5. Restate state every turn.
-6. Specific time estimates (minutes, not "a bit").
-7. Make wins visible.
-8. Matter-of-fact errors.
+5. Restate only the state needed to resume.
+6. Give time estimates only when grounded.
+7. Make completed work visible when useful.
+8. Use a matter-of-fact tone for errors.
 9. Preserve information; use progressive disclosure.
-10. No preamble. No recap. No closers.
+10. No empty preamble, redundant recap, or closing pleasantries.
+
+The core principle is: **optimize presentation, not reasoning depth**. Shorter visible output must not reduce investigation, verification, candidate generation, analysis, or relevant final information.
 
 ## Tune it
 
 Fork, edit `skills/i-have-adhd/SKILL.md`, then swap your copy in:
 
 ```bash
-claude plugin uninstall i-have-adhd            # drop the upstream copy first:
+claude plugin uninstall i-have-adhd            # drop the upstream copy first
 claude plugin marketplace remove i-have-adhd   # fork and upstream share both names
 claude plugin marketplace add <your-username>/i-have-adhd
 claude plugin install i-have-adhd@i-have-adhd
@@ -100,7 +102,7 @@ Restart your coding assistant, then re-invoke `/i-have-adhd`.
 
 ## Credits
 
-Loosely based on *The Adult ADHD Tool Kit* by J. Russell Ramsay and Anthony L. Rostain. Adapted for how an LLM should respond, not how a human should organize their day.
+Loosely based on *The Adult ADHD Tool Kit* by J. Russell Ramsay and Anthony L. Rostain. Adapted for how an LLM should present information, not as a diagnostic model of how every person with ADHD thinks or organizes their day.
 
 ## License
 
